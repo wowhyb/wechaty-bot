@@ -4,10 +4,13 @@ import replyMessage from '../utils/get-openai.js'
 import replyAiImage from '../utils/get-ai-image.js'
 
 //  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-const AutoReplyFriend = parseInt(process.env.AutoReplyFriend)
-const AutoReplyGroup = parseInt(process.env.AutoReplyGroup)
-const RoomList = JSON.parse(process.env.RoomList); // in your app file
-const FriendList = JSON.parse(process.env.FriendList); // in your app file
+const AutoReplyFriend = true
+const AutoReplyGroup = true
+console.log("11");
+const RoomList = []; // in your app file
+console.log("33");
+const FriendList = []; // in your app file
+console.log("22");
 const im = process.env.CHATGPT_IMG_KEYWORD;
 const tm = process.env.CHATGPT_TEXT_KEYWORD;
 
@@ -50,10 +53,10 @@ const onMessage = async (msg, bot) => {
     if (AutoReplyFriend) {
       if (FriendList.length === 0 || FriendList.includes(contact.name())) {
         const mgsfrom = false
-        if (content.startsWith('/c ')) {
-          replyMessage(mgsfrom, contact, content.replace('/c ', ''))
-        } else if (content.startsWith('/img ')) {
-          replyAiImage(mgsfrom, contact, content.replace('/img ', ''))
+        if (content.startsWith(tm + ' ')) {
+          replyMessage(mgsfrom, contact, content.replace(tm + ' ', ''))
+        } else if (content.startsWith(im + ' ')) {
+          replyAiImage(mgsfrom, contact, content.replace(im + ' ', ''))
         }
       } else {
         console.log(`好友名: ${contact.name()} 不在好友列表中`);
