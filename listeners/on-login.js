@@ -7,7 +7,7 @@ import sendmsg from '../utils/pushmsg.js'
 async function onLogin(user, bot) {
   // console.log('bot');
   
-  console.log(`Bot${user}已登录了`);
+  console.log(`✅ User ${user} has logged in`);
 
   const app = Express()
 

@@ -1,14 +1,11 @@
 
-import QrcodeTerminal from 'qrcode-terminal'
+import QRCode from "qrcode";
 async function onScan (qrcode, status) {
-  QrcodeTerminal.generate(qrcode, {small: true})
-
-  const qrcodeImageUrl = [
-    'https://api.qrserver.com/v1/create-qr-code/?data=',
-    encodeURIComponent(qrcode),
-  ].join('')
-
-  console.log(status, qrcodeImageUrl)
+  const qrcodeImageUrl = `https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`;
+  console.log(`💡 Scan QR Code to login: ${status}\n${qrcodeImageUrl}`);
+  console.log(
+    await QRCode.toString(qrcode, { type: "terminal", small: true })
+  );
 }
 
 export default onScan

@@ -15,6 +15,7 @@ const im = process.env.CHATGPT_IMG_KEYWORD;
 const tm = process.env.CHATGPT_TEXT_KEYWORD;
 
 const onMessage = async (msg, bot) => {
+  console.log(`📨 ${msg}`);
   const contact = msg.talker(); // 发消息人
   const UrlLink = bot.UrlLink;
   const content = msg.text().trim(); // 消息内容
@@ -34,7 +35,7 @@ const onMessage = async (msg, bot) => {
     const mgsfrom = contact.name()
     console.log(`群名: ${topic} 发消息人: ${mgsfrom} 内容: ${content}`);
     if (AutoReplyGroup) {
-      if (RoomList.length === 0 || RoomList.includes(topic)) {
+      if (RoomList.length === 0) {
         if (content.startsWith(tm + ' ')) {
           replyMessage(mgsfrom, room, content.replace(tm + ' ', ''))
         } else if (content.startsWith(im + ' ')) {
@@ -51,11 +52,17 @@ const onMessage = async (msg, bot) => {
   } else if (isText) {
     // 如果是好友消息 目前只处理文字消息
     if (AutoReplyFriend) {
-      if (FriendList.length === 0 || FriendList.includes(contact.name())) {
+      if (FriendList.length === 0) {
         const mgsfrom = false
+        console.log(tm)
+        console.log(im)
+        console.log(content.startsWith(`${tm} `))
+        console.log(content.startsWith(`${im} `))
         if (content.startsWith(tm + ' ')) {
+          console.log(tm)
           replyMessage(mgsfrom, contact, content.replace(tm + ' ', ''))
         } else if (content.startsWith(im + ' ')) {
+          console.log(im)
           replyAiImage(mgsfrom, contact, content.replace(im + ' ', ''))
         }
       } else {
