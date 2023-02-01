@@ -8,7 +8,8 @@ const AutoReplyFriend = parseInt(process.env.AutoReplyFriend)
 const AutoReplyGroup = parseInt(process.env.AutoReplyGroup)
 const RoomList = JSON.parse(process.env.RoomList); // in your app file
 const FriendList = JSON.parse(process.env.FriendList); // in your app file
-
+const im = process.env.CHATGPT_IMG_KEYWORD;
+const tm = process.env.CHATGPT_TEXT_KEYWORD;
 
 const onMessage = async (msg, bot) => {
   const contact = msg.talker(); // 发消息人
@@ -31,10 +32,10 @@ const onMessage = async (msg, bot) => {
     console.log(`群名: ${topic} 发消息人: ${mgsfrom} 内容: ${content}`);
     if (AutoReplyGroup) {
       if (RoomList.length === 0 || RoomList.includes(topic)) {
-        if (content.startsWith('/c ')) {
-          replyMessage(mgsfrom, room, content.replace('/c ', ''))
-        } else if (content.startsWith('/img ')) {
-          replyAiImage(mgsfrom, room, content.replace('/img ', ''))
+        if (content.startsWith(tm + ' ')) {
+          replyMessage(mgsfrom, room, content.replace(tm + ' ', ''))
+        } else if (content.startsWith(im + ' ')) {
+          replyAiImage(mgsfrom, room, content.replace(im + ' ', ''))
         }
       } else {
         console.log(`群名: ${topic} 不在群列表中`);
